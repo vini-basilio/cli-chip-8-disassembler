@@ -1,12 +1,12 @@
 use std::error::Error;
 use std::fs::File;
 use std::io::{BufReader, Read};
-use crate::modules::decode::{opcode_extract, decode};
+use crate::modules::disassembler::decode::{decode, opcode_extract};
 
 pub struct Disassembler {
 }
 impl Disassembler {
-    pub fn disassemble(rom: &str) -> Result<(), Box<dyn Error>>{
+    pub fn disassemble(rom: &str) -> Result<Vec<String>, Box<dyn Error>>{
         let reader = BufReader::new(File::open(rom).unwrap());
         let mut buffer = Vec::new();
 
@@ -18,6 +18,7 @@ impl Disassembler {
         let mut index = 0usize;
         let mut result: Vec<String> = Vec::new();
         let mut pc = 0x200;
+        
         while index < buffer.len(){
             let high = buffer[index] as u16;
             index += 1;
@@ -29,6 +30,6 @@ impl Disassembler {
             pc += 2;
         };
 
-        Ok(())
+        Ok(result)
     }
 }

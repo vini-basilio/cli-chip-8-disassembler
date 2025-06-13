@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
-    use crate::modules::decode::{decode, opcode_extract};
+    use crate::modules::disassembler::decode::{decode, opcode_extract};
+
     #[test]
     fn cls(){
         // Teste do opcode: 0x00E0

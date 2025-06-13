@@ -1,4 +1,5 @@
-use crate::modules::instructions::{Decoded, INSTRUCTIONS};
+use crate::modules::disassembler::instructions::{Decoded, INSTRUCTIONS};
+
 pub fn opcode_extract(opcode: u16) ->  Result<Decoded, u16> {
     for instruction in  INSTRUCTIONS.iter() {
         let opcode_demasked = opcode & instruction.mask;
