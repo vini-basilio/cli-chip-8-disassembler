@@ -1,9 +1,6 @@
 mod modules;
 
 use std::{env, io, process};
-use std::io::prelude::*;
-use ratatui::{style::Stylize};
-use ratatui::prelude::{Widget};
 use crate::modules::disassembler::lib::disassembler;
 use crate::modules::rom::Rom;
 use crate::modules::ui::App;

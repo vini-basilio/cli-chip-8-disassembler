@@ -3,7 +3,7 @@ pub fn opcode_extract(opcode: u16) ->  Result<Decoded, u16> {
     for instruction in  INSTRUCTIONS.iter() {
         let opcode_demasked = opcode & instruction.mask;
         if opcode_demasked == instruction.pattern {
-
+            // add args extrated from opcode in the decoded
             let mut arguments: Vec<u16> = Vec::new();
             for arg in instruction.arguments {
                 let value = (opcode & arg.mask) >> arg.shift;
@@ -23,8 +23,8 @@ pub fn decode(result: Result<Decoded, u16>) -> String {
     match result {
         Ok(decoded) => {
             match decoded.id.as_str() {
-                "CLEAR_SCREEN" => format!("CLS"),
-                "SUB_RET" => format!("RET"),
+                "CLEAR_SCREEN" => String::from("CLS"),
+                "SUB_RET" => String::from("RET"),
                 "JUMP" => format!("JP 0x{:03X}", decoded.arguments[0]),
                 "SUB_CALL" => format!("CALL 0x{:03X}", decoded.arguments[0]),
                 "IF_VX_EQUALS_LIT" => format!("SE V{:01X}, 0x{:02X}", decoded.arguments[0], decoded.arguments[1]),
