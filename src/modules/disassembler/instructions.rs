@@ -65,4 +65,13 @@ pub const INSTRUCTIONS: &[Instruction] = &[
     instruction!("STORE_MEMO", 0xF0FF, 0xF055, [0x0F00, 8]),
     instruction!("LOAD_FROM_MEMO", 0xF0FF, 0xF065, [0x0F00, 8]),
     // super chip-8
+    instruction!("SCROLL_DOWN", 0xFFF0, 0x00C0, [0x000F, 0]),
+    instruction!("SCROLL_RIGHT", 0xFFFF, 0x00FB , []),
+    instruction!("SCROLL_LEFT", 0xFFFF, 0x00FC , []),
+    instruction!("EXIT", 0xFFFF, 0x00FD , []),
+    instruction!("LOW", 0xFFFF, 0x00FE , []),
+    instruction!("HIGH", 0xFFFF, 0x00FF , []),
+    instruction!("INDEX_FONT", 0xF0FF, 0xF030 , [0x0F00, 8]),
+    instruction!("STORE_MEMO_SUPER", 0xF0FF, 0xF075, [0x0F00, 8]),
+    instruction!("LOAD_FROM_MEMO_SUPER", 0xF0FF, 0xF085, [0x0F00, 8]),
 ];

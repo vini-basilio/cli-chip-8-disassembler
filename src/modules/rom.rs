@@ -5,7 +5,7 @@ pub struct Rom {
 impl Rom {
     pub fn new(args: &[String]) -> Result<Rom, &str> {
         if args.len() < 2 {
-            return Err("caminho do arquivo não passado");
+            return Err("File path not provided");
         }
         let file_name = args[1].clone();
         Ok(Rom { file_name })

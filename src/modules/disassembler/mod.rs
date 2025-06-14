@@ -1,6 +1,4 @@
-mod decode;
+mod disassembler;
 mod instructions;
 mod tests;
-mod disassembler;
-
-pub mod Disassembler;
+pub mod lib;

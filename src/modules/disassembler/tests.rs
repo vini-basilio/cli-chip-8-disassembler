@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::modules::disassembler::decode::{decode, opcode_extract};
+    use crate::modules::disassembler::disassembler::{decode, opcode_extract};
 
     #[test]
     fn cls(){
