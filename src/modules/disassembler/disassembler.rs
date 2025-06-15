@@ -1,3 +1,4 @@
+use std::collections::VecDeque;
 use crate::modules::disassembler::instructions::{Decoded, INSTRUCTIONS};
 pub fn opcode_extract(opcode: u16) ->  Result<Decoded, u16> {
     for instruction in  INSTRUCTIONS.iter() {
@@ -19,7 +20,7 @@ pub fn opcode_extract(opcode: u16) ->  Result<Decoded, u16> {
     Err(opcode)
 }
 
-pub fn decode(result: Result<Decoded, u16>) -> String {
+pub fn decode(result: Result<Decoded, u16>, address: &mut VecDeque<usize>) -> String {
     match result {
         Ok(decoded) => {
             match decoded.id.as_str() {
@@ -42,7 +43,10 @@ pub fn decode(result: Result<Decoded, u16>) -> String {
                 "SUB_VX_FROM_VY" => format!("SUBN V{:01X}, V{:01X}",  decoded.arguments[0], decoded.arguments[1]),
                 "SHIFT_LEFT" => format!("SHL V{:01X} {{, V{:01X}}}",  decoded.arguments[0], decoded.arguments[1]),
                 "IF_VX_NOT_EQUALS_VY" => format!("SNE V{:01X}, V{:01X}", decoded.arguments[0], decoded.arguments[1]),
-                "SET_INDEX" => format!("LD I, 0x{:03X}", decoded.arguments[0]),
+                "SET_INDEX" => {
+                    address.push_back(decoded.arguments[0] as usize);
+                    format!("LD I, 0x{:03X}", decoded.arguments[0])
+                },
                 "JUMP_OFFSET" => format!("JP V0, 0x{:03X}", decoded.arguments[0]),
                 "RANDOM" => format!("RND V{:01X}, 0x{:02X}", decoded.arguments[0], decoded.arguments[1]),
                 "JUMP_KEY_PRESS" => format!("SKP V{:01X}", decoded.arguments[0]),
@@ -58,6 +62,10 @@ pub fn decode(result: Result<Decoded, u16>) -> String {
                 "LOAD_FROM_MEMO" =>  format!("LD V{:01}, [I]", decoded.arguments[0]),
                 "DRAW" => {
                     if decoded.arguments[2] != 0 {
+                        if let Some(&start_address) = address.get(address.len() - 1) {
+                            let size = decoded.arguments[2] as usize;
+                            address.push_back(start_address + size);
+                        }
                         format!("DRW V{:01X}, V{:01X}, 0x{:01X}", decoded.arguments[0], decoded.arguments[1], decoded.arguments[2])
                     } else {
                         format!("DRW V{:01}, V{:01}, 0", decoded.arguments[0], decoded.arguments[1])

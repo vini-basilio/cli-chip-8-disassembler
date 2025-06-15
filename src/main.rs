@@ -12,12 +12,12 @@ fn main() -> io::Result<()> {
         process::exit(1);
     });
 
-
-    let decoded = disassembler::run(&*rom.file_name).unwrap_or_else(|e| {
+    let rom_init_address = 0x200;
+    let mut  disassembler_setted = disassembler::new(rom_init_address);
+    let decoded = disassembler_setted.run(&*rom.file_name).unwrap_or_else(|e| {
         eprintln!("Application error: {}", e);
         process::exit(1);
     });
-
 
     let mut terminal = ratatui::init();
     let mut app = App {
