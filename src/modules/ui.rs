@@ -43,7 +43,7 @@ impl App {
                     self.scroll -= 1;
                 }
             }
-            KeyCode::Char('t') | KeyCode::Char('S') => {
+            KeyCode::Char('s') => {
                 if let Err(err) = self.export_as_txt() {
                     eprintln!("Erro to export: {}", err);
                 }
@@ -74,16 +74,16 @@ impl Widget for &App {
         let title = Line::from(" CHIP-8 Disassembler ".bold());
         let instructions = Line::from(vec![
             " Scroll Up ".into(),
-            "<J> ".blue().bold(),
+            "<j> ".blue().bold(),
             " | ".into(),
             " Scroll Down ".into(),
-            "<K> ".blue().bold(),
+            "<k> ".blue().bold(),
             " | ".into(),
             " Export as txt and Exit".into(),
-            "<S> ".blue().bold(),
+            "<s> ".blue().bold(),
             " | ".into(),
             " Quit ".into(),
-            "<Q> ".blue().bold(),
+            "<q> ".blue().bold(),
         ]);
 
         let block = Block::bordered()
